@@ -7,4 +7,10 @@ r = requests.get(base_url)
 
 if r.status_code == 200:
     soup = BeautifulSoup(r.text, 'html.parser')
-    print(soup.prettify())
+    # findAll() method returns an iterable
+    article_list = soup.findAll(class_='product_pod')
+    for article in article_list:
+        title = article.h3.a['title']
+        price = article.find(class_='price_color').text
+        star_rating = article.p['class'][1]
+        print(f"Title: {title} - Price: {price}, - Stars: {star_rating}")
